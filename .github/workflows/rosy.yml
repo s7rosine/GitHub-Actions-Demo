@@ -39,5 +39,5 @@ jobs:
         run: |
           docker stop nodejs-demo || true
           docker rm nodejs-demo || true
-          docker run -d --name nodejs-demo -p 8085:3000 rosinebelle/nodejs-demo:v1.0.0
+          docker run -d --name nodejs-demo -p 8090:3000 rosinebelle/nodejs-demo:v1.0.0
 
