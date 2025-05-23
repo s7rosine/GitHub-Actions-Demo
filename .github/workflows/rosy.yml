@@ -1,10 +1,14 @@
 name: Node.js CI/CD Pipeline
 
-on: [push]
+on: 
+  push:
+    branches:
+      - main
+
 
 jobs:
   build-and-deploy:
-    runs-on: [self-hosted, web-team]
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Code
@@ -37,4 +41,3 @@ jobs:
           docker rm nodejs-demo || true
           docker run -d --name nodejs-demo -p 80:3000 rosinebelle/nodejs-demo:v1.0.0
 
-    
