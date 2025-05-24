@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Info
         run: |
           echo "Checking out the repository. Please wait ............"
-          sleep 1
+          sleep 30
 
   test:
     name: Stage 2 - Test
@@ -26,7 +26,7 @@ jobs:
       - name: Testing the Code
         run: |
           echo "Testing the code. Please wait ............"
-          sleep 1
+          sleep 30
 
   scan:
     name: Stage 3 - Scan
@@ -36,7 +36,7 @@ jobs:
       - name: Scanning the Code
         run: |
           echo "Scanning the code. Please wait ............"
-          sleep 1
+          sleep 30
 
   build:
     name: Stage 4 - Build
@@ -48,7 +48,7 @@ jobs:
       - name: Building the Code
         run: |
           echo "Building the code. Please wait ............"
-          sleep 1
+          sleep 30
 
   push-artifact:
     name: Stage 5 - Push to Artifactory
@@ -58,7 +58,7 @@ jobs:
       - name: Pushing the Code to Artifactory
         run: |
           echo "Pushing the code to artifactory. Please wait ............"
-          sleep 1
+          sleep 30
 
   deploy:
     name: Stage 6 - Deploy
@@ -70,7 +70,7 @@ jobs:
       - name: Deploying the Code
         run: |
           echo "Deploying the code. Please wait ............"
-          sleep 1
+          sleep 30
 
   validate:
     name: Stage 7 - Post-Deployment Validation
@@ -80,7 +80,7 @@ jobs:
       - name: Checking the Container State
         run: |
           echo "Checking the container state. Please wait ............"
-          sleep 1
+          sleep 30
 
   cleanup:
     name: Stage 8 - Cleanup
@@ -90,7 +90,7 @@ jobs:
       - name: Clean Up
         run: |
           echo "Clean Up. Please wait ............"
-          sleep 1
+          sleep 30
 
   notify:
     name: Stage 9 - Notify
