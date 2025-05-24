@@ -8,7 +8,7 @@ on:
 jobs:
   checkout:
     name: Stage 1 - Checkout
-    runs-on: [s8]
+    runs-on: [self-hosted,s8]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
