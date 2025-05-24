@@ -21,6 +21,7 @@ jobs:
   test:
     name: Stage 2 - Test
     runs-on: [self-hosted,s8]
+    needs: checkout
     steps:
       - name: Testing the Code
         run: |
@@ -30,6 +31,7 @@ jobs:
   scan:
     name: Stage 3 - Scan
     runs-on: [self-hosted,s8]
+    needs: checkout
     steps:
       - name: Scanning the Code
         run: |
@@ -39,6 +41,7 @@ jobs:
   build:
     name: Stage 4 - Build
     runs-on: [self-hosted,s8]
+    needs: checkout
     steps:
       - name: Building the Code
         run: |
@@ -48,6 +51,7 @@ jobs:
   push-artifact:
     name: Stage 5 - Push to Artifactory
     runs-on: [self-hosted,s8]
+    needs: checkout
     steps:
       - name: Pushing the Code to Artifactory
         run: |
@@ -57,6 +61,7 @@ jobs:
   deploy:
     name: Stage 6 - Deploy
     runs-on: [self-hosted,s8]
+    needs: checkout
     steps:
       - name: Deploying the Code
         run: |
@@ -66,6 +71,7 @@ jobs:
   validate:
     name: Stage 7 - Post-Deployment Validation
     runs-on: [self-hosted,s8]
+    needs: checkout
     steps:
       - name: Checking the Container State
         run: |
@@ -75,6 +81,7 @@ jobs:
   cleanup:
     name: Stage 8 - Cleanup
     runs-on: [self-hosted,s8]
+    needs: checkout
     steps:
       - name: Clean Up
         run: |
@@ -84,6 +91,7 @@ jobs:
   notify:
     name: Stage 9 - Notify
     runs-on: [self-hosted,s8]
+    needs: cleanup
     steps:
       - name: Success Message
         if: success()
