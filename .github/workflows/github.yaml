@@ -12,8 +12,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Check Docker version
-        run: docker --version
+      # - name: Check Docker version
+      #   run: docker --version
 
       - name: Check Git version
         run: git --version
