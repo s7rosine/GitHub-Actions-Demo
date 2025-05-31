@@ -17,9 +17,11 @@ jobs:
         run: |
           echo "Checking out the repository. Please wait ............"
           sleep 3
+          pwd
+          ls 
 
   test:
-    name: Stage 2 - Test
+    name: build image and push into dockerhub
     runs-on: [self-hosted,s8]
     needs: checkout
     steps:
