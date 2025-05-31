@@ -18,6 +18,9 @@ jobs:
     runs-on: [self-hosted, s8]
     needs: checkout
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Testing the Code
         run: |
           pwd
@@ -25,7 +28,8 @@ jobs:
 
       - name: Build Docker Image from s9/app01
         run: |
-          sudo docker build -t devopseasylearning/s9-app01:latest ./s9/app01
+          cd s9/app01
+          sudo docker build -t devopseasylearning/s9-app01:latest .
           sudo docker images
 
       - name: Login to DockerHub
