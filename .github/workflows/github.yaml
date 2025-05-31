@@ -9,7 +9,6 @@ jobs:
   build_image_and_push_into_dockerhub:
     name: build image and push into dockerhub
     runs-on: [self-hosted, s8]
-    needs: checkout
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
