@@ -26,7 +26,7 @@ jobs:
       - name: Build Docker Image from s9/app01
         run: |
           cd s9/app01
-          sudo docker build -t api:latest .
+          sudo docker build -t devopseasylearning/s9-app01:latest .
           sudo docker images
 
       # - name: Login to DockerHub
