@@ -13,13 +13,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Checkout Info
-        run: |
-          echo "Checking out the repository. Please wait ............"
-          sleep 3
-          pwd
-          ls 
-
   test:
     name: build image and push into dockerhub
     runs-on: [self-hosted,s8]
@@ -27,5 +20,5 @@ jobs:
     steps:
       - name: Testing the Code
         run: |
-         sudo docker images
-         kubectl get ns
+          pwd
+          ls 
