@@ -29,4 +29,4 @@ jobs:
 
       - name: Push Docker Image
         run: |
-          docker push devopseasylearning/s9-s9-api:latest
+          docker push devopseasylearning/s9-api:latest
