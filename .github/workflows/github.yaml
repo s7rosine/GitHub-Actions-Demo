@@ -56,6 +56,8 @@ jobs:
           sed -i "s|API_IMAGE|$API_IMAGE|g" docker-compose.yml
           sed -i "s|DB_IMAGE|$DB_IMAGE|g" docker-compose.yml
           sed -i "s|FRONTEND_IMAGE|$FRONTEND_IMAGE|g" docker-compose.yml
+          sed -i "s|POSTGRES_USER_S9|${{ vars.POSTGRES_USER_S9 }}|g" docker-compose.yml
+          sed -i "s|POSTGRES_PASSWORD_S9|${{ secrets.POSTGRES_PASSWORD_S9 }}|g" docker-compose.yml
           cat docker-compose.yml
 
       # - name: Deploy with Docker Compose
