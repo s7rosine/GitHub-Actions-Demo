@@ -67,5 +67,6 @@ jobs:
       - name: Deploy with Docker Compose
         working-directory: s9/app01
         run: |
-          docker-compose up down -v |true
+          docker compose down --volumes --remove-orphans
           docker-compose up -d
+          docker-compose ps
