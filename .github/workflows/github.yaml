@@ -60,7 +60,12 @@ jobs:
           sed -i "s|POSTGRES_PASSWORD_S9|${{ secrets.POSTGRES_PASSWORD_S9 }}|g" docker-compose.yml
           cat docker-compose.yml
 
-      # - name: Deploy with Docker Compose
-      #   working-directory: s9/app01
-      #   run: |
-      #     docker-compose up -d
+          docker pull $API_IMAGE
+          docker pull $DB_IMAGE
+          docker pull $FRONTEND_IMAGE
+
+      - name: Deploy with Docker Compose
+        working-directory: s9/app01
+        run: |
+          docker-compose up down -v |true
+          docker-compose up -d
