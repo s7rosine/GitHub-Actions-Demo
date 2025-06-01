@@ -64,6 +64,10 @@ docker compose up -d
 - Swagger Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 - Frontend App: [http://localhost:8080](http://localhost:8080)
 
+- Swagger Docs: [http://localhost:8000/docs](http://server2.anomicatech.com:8000/docs)
+- Frontend App: [http://localhost:8080](http://server2.anomicatech.com:8065/)
+
+
 ---
 
 ## 🧪 API Endpoints
