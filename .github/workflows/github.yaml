@@ -23,7 +23,12 @@ jobs:
           fi
           checkov --version
 
-      - name: Run Checkov on Dockerfile
+      # - name: Run Checkov on Dockerfile
+      #   run: |
+      #     echo "🔍 Running Checkov on s9/app01/api.Dockerfile"
+      #     checkov -f s9/app01/api.Dockerfile --quiet --compact
+
+      - name: Run Checkov Scan with Config File
         run: |
-          echo "🔍 Running Checkov on s9/app01/api.Dockerfile"
-          checkov -f s9/app01/api.Dockerfile --quiet --compact
+          echo "🔍 Running Checkov on s9/app01/api.Dockerfile using .checkov.yaml config"
+          checkov -f s9/app01/api.Dockerfile --config-file .checkov.yaml
