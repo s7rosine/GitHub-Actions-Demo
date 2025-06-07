@@ -32,4 +32,5 @@ jobs:
         run: |
           ls -l
           echo "🔍 Running Checkov on s9/app01/api.Dockerfile using .checkov.yaml config"
+          cat .checkov.yaml
           checkov -f s9/app01/api.Dockerfile --config-file .checkov.yaml
