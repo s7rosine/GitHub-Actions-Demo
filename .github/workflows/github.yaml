@@ -23,11 +23,7 @@ jobs:
           fi
           checkov --version
 
-      - name: Check Trivy Version
+      - name: Run Checkov on Dockerfile
         run: |
-          echo "🔍 Verifying Trivy installation..."
-          if ! command -v trivy &> /dev/null; then
-            echo "❌ Trivy is not installed or not in PATH"
-            exit 1
-          fi
-          trivy --version
+          echo "🔍 Running Checkov on s9/app01/api.Dockerfile"
+          checkov -f s9/app01/api.Dockerfile --quiet --compact
