@@ -1,6 +1,7 @@
 FROM nginx:alpine
 
-RUN useradd -m appuser
+# Create a non-root user (Alpine-compatible)
+RUN adduser -D -h /home/appuser appuser
 
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
