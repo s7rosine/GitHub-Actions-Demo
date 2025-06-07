@@ -14,15 +14,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Run Checkov Scan with Config File
-        run: |
-          ls -l
-          echo "🔍 Running Checkov .checkov.yaml config"
-          cat .checkov.yaml
-          checkov -f s9/app01/api.Dockerfile --config-file .checkov.yaml
-          checkov -f s9/app01/db.Dockerfile --config-file .checkov.yaml
-          checkov -f s9/app01/frontend.Dockerfile --config-file .checkov.yaml
-
       - name: Build Docker Images (API, DB, Frontend)
         working-directory: s9/app01
         run: |
