@@ -1,6 +1,7 @@
 FROM python:3.11-slim
 
 WORKDIR /app
+RUN useradd -m appuser
 
 # Install dependencies
 RUN apt-get update && \
@@ -17,6 +18,7 @@ COPY ./app ./app
 COPY .env .
 COPY wait-for-db.sh /wait-for-db.sh
 RUN chmod +x /wait-for-db.sh
+USER appuser
 
 EXPOSE 8000
 
