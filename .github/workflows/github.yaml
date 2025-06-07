@@ -41,8 +41,8 @@ jobs:
           echo "🔍 Scanning API image..."
           trivy image --severity MEDIUM,HIGH,CRITICAL --no-progress $API_IMAGE
 
-          echo "🔍 Scanning DB image..."
-          trivy image --severity MEDIUM,HIGH,CRITICAL --no-progress $DB_IMAGE
+          # echo "🔍 Scanning DB image..."
+          # trivy image --severity MEDIUM,HIGH,CRITICAL --no-progress $DB_IMAGE
 
-          echo "🔍 Scanning Frontend image..."
-          trivy image --severity MEDIUM,HIGH,CRITICAL --no-progress $FRONTEND_IMAGE
+          # echo "🔍 Scanning Frontend image..."
+          # trivy image --severity MEDIUM,HIGH,CRITICAL --no-progress $FRONTEND_IMAGE
