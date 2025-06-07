@@ -1,0 +1,7 @@
+skip_checks:
+  - CKV_DOCKER_2    # Ensure that HEALTHCHECK instructions have been added to container images
+  # - CKV_DOCKER_1    # Ensure that a user for the container has been created
+  # - CKV_DOCKER_3    # Ensure that COPY is used instead of ADD in Dockerfile
+  # - CKV_DOCKER_7    # Ensure that the base image uses a tag
+  # - CKV_DOCKER_18   # Ensure that no secrets are stored in environment variables
+  # - CKV_DOCKER_23   # Ensure that the Dockerfile does not contain clear text secrets
