@@ -30,5 +30,6 @@ jobs:
 
       - name: Run Checkov Scan with Config File
         run: |
+          ls -l
           echo "🔍 Running Checkov on s9/app01/api.Dockerfile using .checkov.yaml config"
           checkov -f s9/app01/api.Dockerfile --config-file .checkov.yaml
