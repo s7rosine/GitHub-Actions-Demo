@@ -26,6 +26,42 @@ jobs:
           sonar-scanner \
             -Dsonar.login=$SONAR_TOKEN
 
+      - name: Wait for Quality Gate result
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          echo "Fetching SonarQube task status..."
+          CE_TASK_URL=$(cat .scannerwork/report-task.txt | grep ceTaskUrl | cut -d'=' -f2)
+          echo "CE Task URL: $CE_TASK_URL"
+
+          status="PENDING"
+          retries=30
+          while [[ "$status" != "SUCCESS" && $retries -gt 0 ]]; do
+            sleep 5
+            status=$(curl -s -u $SONAR_TOKEN: "$CE_TASK_URL" | jq -r .task.status)
+            echo "Current status: $status"
+            retries=$((retries - 1))
+          done
+
+          if [[ "$status" != "SUCCESS" ]]; then
+            echo "SonarQube analysis did not complete successfully."
+            exit 1
+          fi
+
+          analysisId=$(curl -s -u $SONAR_TOKEN: "$CE_TASK_URL" | jq -r .task.analysisId)
+
+          echo "Checking Quality Gate status..."
+          QUALITY_GATE_STATUS=$(curl -s -u $SONAR_TOKEN: "$SONAR_HOST_URL/api/qualitygates/project_status?analysisId=$analysisId" | jq -r .projectStatus.status)
+
+          echo "Quality Gate status: $QUALITY_GATE_STATUS"
+
+          if [[ "$QUALITY_GATE_STATUS" != "OK" ]]; then
+            echo "Quality Gate failed."
+            exit 1
+          fi
+
+          echo "Quality Gate passed."
+
       # - name: Build Docker Images (API, DB, Frontend)
       #   working-directory: s9/app01
       #   run: |
