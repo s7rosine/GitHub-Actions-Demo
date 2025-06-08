@@ -31,7 +31,20 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           echo "Fetching SonarQube task status..."
-          CE_TASK_URL=$(cat .scannerwork/report-task.txt | grep ceTaskUrl | cut -d'=' -f2)
+
+          if [ ! -f .scannerwork/report-task.txt ]; then
+            echo "report-task.txt not found. SonarScanner may have failed to generate it."
+            exit 1
+          fi
+
+          CE_TASK_URL=$(grep ceTaskUrl .scannerwork/report-task.txt | cut -d'=' -f2)
+
+          if [ -z "$CE_TASK_URL" ]; then
+            echo "ceTaskUrl not found in report-task.txt"
+            cat .scannerwork/report-task.txt
+            exit 1
+          fi
+
           echo "CE Task URL: $CE_TASK_URL"
 
           status="PENDING"
