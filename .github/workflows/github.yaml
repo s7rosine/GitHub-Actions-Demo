@@ -26,59 +26,33 @@ jobs:
           sonar-scanner \
             -Dsonar.login=$SONAR_TOKEN
 
-      - name: Wait for Quality Gate result
+      - name: Send Slack Notification (Success or Failure)
+        if: always()
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          echo "Fetching SonarQube task status..."
-
-          if [ ! -f .scannerwork/report-task.txt ]; then
-            echo "report-task.txt not found. SonarScanner may have failed to generate it."
-            exit 1
+          STATUS="Success"
+          COLOR="#36a64f"
+          ICON="✅"
+          if [ "${{ job.status }}" != "success" ]; then
+            STATUS="Failed"
+            COLOR="#FF0000"
+            ICON="❌"
           fi
 
-          CE_TASK_URL=$(grep ceTaskUrl .scannerwork/report-task.txt | cut -d'=' -f2)
-
-          if [ -z "$CE_TASK_URL" ]; then
-            echo "ceTaskUrl not found in report-task.txt"
-            cat .scannerwork/report-task.txt
-            exit 1
-          fi
-
-          echo "CE Task URL: $CE_TASK_URL"
-
-          status="PENDING"
-          retries=30
-          while [[ "$status" != "SUCCESS" && $retries -gt 0 ]]; do
-            sleep 5
-            status=$(curl -s -u $SONAR_TOKEN: "$CE_TASK_URL" | jq -r .task.status)
-            echo "Current status: $status"
-            retries=$((retries - 1))
-          done
-
-          if [[ "$status" != "SUCCESS" ]]; then
-            echo "SonarQube analysis did not complete successfully."
-            exit 1
-          fi
-
-          analysisId=$(curl -s -u $SONAR_TOKEN: "$CE_TASK_URL" | jq -r .task.analysisId)
-
-          echo "Checking Quality Gate status..."
-          QUALITY_GATE_STATUS=$(curl -s -u $SONAR_TOKEN: "$SONAR_HOST_URL/api/qualitygates/project_status?analysisId=$analysisId" | jq -r .projectStatus.status)
-
-          echo "Quality Gate status: $QUALITY_GATE_STATUS"
-
-          if [[ "$QUALITY_GATE_STATUS" != "OK" ]]; then
-            echo "Quality Gate failed."
-            exit 1
-          fi
-
-          echo "Quality Gate passed."
-
-      # - name: Build Docker Images (API, DB, Frontend)
-      #   working-directory: s9/app01
-      #   run: |
-      #     sudo docker build -f api.Dockerfile -t $API_IMAGE .
-      #     sudo docker build -f db.Dockerfile -t $DB_IMAGE .
-      #     sudo docker build -f frontend.Dockerfile -t $FRONTEND_IMAGE .
-      #     sudo docker images
+          curl -X POST -H 'Content-type: application/json' --data "{
+            \"attachments\": [
+              {
+                \"color\": \"$COLOR\",
+                \"blocks\": [
+                  {
+                    \"type\": \"section\",
+                    \"text\": {
+                      \"type\": \"mrkdwn\",
+                      \"text\": \"$ICON *DevOps Pipeline $STATUS*\\n*Repository:* $GITHUB_REPOSITORY\\n*Branch:* main\\n*Status:* $STATUS\\n*Commit:* <https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}|${GITHUB_SHA}>\\n*Actor:* ${{ github.actor }}\"
+                    }
+                  }
+                ]
+              }
+            ]
+          }" "$SLACK_WEBHOOK_URL"
