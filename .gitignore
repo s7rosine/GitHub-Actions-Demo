@@ -1,0 +1,7 @@
+C:\Users\User\del-student-devops\s9\GitHub-Actions-Demo\actions-runner\actions-runner-linux-x64-2.325.0.tar.gz
+GitHub-Actions-Demo/actions-runner-win-x64-2.325.0.zip
+GitHub-Actions-Demo/externals/node20/bin/node.exe
+GitHub-Actions-Demo/actions-runner/externals/node20/bin/node
+GitHub-Actions-Demo/actions-runner/externals/node20_alpine/bin/node
+*.tar.gz
+s9/GitHub-Actions-Demo/actions-runner/actions-runner-linux-x64-2.325.0.tar.gz

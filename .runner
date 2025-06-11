@@ -1,0 +1,11 @@
+﻿{
+  "agentId": 22,
+  "agentName": "ROSINE-PC",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelinesghubeus11.actions.githubusercontent.com/3i7yQBsUVSffXjnb9gixObXCCRWy1mZ6EFA9pX2uegS9BR6nUw/",
+  "gitHubUrl": "https://github.com/s7rosine/GitHub-Actions-Demo",
+  "workFolder": "_work",
+  "useV2Flow": true,
+  "serverUrlV2": "https://broker.actions.githubusercontent.com/"
+}

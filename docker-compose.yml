@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: db.Dockerfile
+    image: rosinebelle/s7rosine-db:v1.0.0
+    container_name: app01_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: logindb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  user-service:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    image: rosinebelle/s7rosine-api:v1.0.0
+    container_name: app01_user-service
+    depends_on:
+      - db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: logindb
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+    ports:
+      - 8000:8000
+    restart: on-failure
+
+  frontend-service:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    image: rosinebelle/s7rosine-frontend:v1.0.0
+    container_name: app01_frontend
+    depends_on:
+      - user-service
+    ports:
+      - 8065:80
+    restart: always
+
+volumes:
+  db_data:
